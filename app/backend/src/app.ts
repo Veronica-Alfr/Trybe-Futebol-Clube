@@ -1,4 +1,5 @@
 import * as express from 'express';
+require('express-async-errors');
 
 class App {
   public app: express.Express;
