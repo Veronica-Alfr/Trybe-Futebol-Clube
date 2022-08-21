@@ -17,7 +17,7 @@ const login = async (email: string, password: string) => {
 
     if (user.password !== password || user.email !== email) {
        const e = new Error('Incorrect email or passwords');
-       e.name = 'UnauthorizedError';
+       e.name = 'UnauthorizedUserError';
        throw e;
    }
 

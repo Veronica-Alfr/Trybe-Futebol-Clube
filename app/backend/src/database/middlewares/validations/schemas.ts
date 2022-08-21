@@ -17,3 +17,5 @@ const validateUser = (body: object) => {
 
     return value;
 };
+
+module.exports = { validateUser };
