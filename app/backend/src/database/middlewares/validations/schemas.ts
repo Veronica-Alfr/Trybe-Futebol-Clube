@@ -2,7 +2,7 @@ const Joi = require('joi');
 
 const fieldsMissing = 'All fields must be filled';
 
-const validateUser = (body: object) => {
+export const validateUser = (body: object) => {
     const schemaUser = Joi.object({
     email: Joi.string().email().required().messages({
         'string.empty': fieldsMissing,
@@ -17,5 +17,3 @@ const validateUser = (body: object) => {
 
     return value;
 };
-
-module.exports = { validateUser };

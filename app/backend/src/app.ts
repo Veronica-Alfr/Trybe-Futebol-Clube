@@ -1,6 +1,6 @@
 import * as express from 'express';
 const loginRouter = require('./database/routers/loginRouter');
-const errorMiddleware = require('./database/midlewares/error')
+const errorMiddleware = require('./database/middlewares/error')
 require('express-async-errors');
 
 class App {
