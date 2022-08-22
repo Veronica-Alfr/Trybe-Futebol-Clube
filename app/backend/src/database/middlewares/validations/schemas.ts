@@ -14,7 +14,11 @@ export const validateUser = (body: object) => {
 });
 
   const { error, value } = schemaUser.validate(body);
-    if (error) return { error: { code: 400, message: error.details[0].message } };
+    if (error) {
+        const e = new Error(error.details[0].message);
+        e.name = 'BadRequest';
+        throw e;
+    }
 
     return value;
 };

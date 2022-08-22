@@ -1,7 +1,6 @@
 import User from "../models/user";
 import { JwtService } from "./jwtService";
 import { compareSync } from 'bcryptjs';
-// import ILoginService from "../interfaces/ILoginService";
 
 export default class LoginService {
     // constructor() { }
@@ -13,7 +12,7 @@ export default class LoginService {
 
     if (!user || !compareSync(password, user.password)) {
         const e = new Error('Incorrect email or passwords');
-        e.name = 'UnauthorizedUserError';
+        e.name = 'Unauthorized';
         throw e;
     }
     const { password: _, ...userWithoutPass } = user;
