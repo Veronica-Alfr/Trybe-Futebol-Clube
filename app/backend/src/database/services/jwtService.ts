@@ -1,4 +1,4 @@
-var jwt = require('jsonwebtoken');
+import jwt = require('jsonwebtoken');
 
 export class JwtService {
   static sign(payload: { id: number, email: string }): string {

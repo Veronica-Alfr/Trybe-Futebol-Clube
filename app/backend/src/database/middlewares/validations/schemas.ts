@@ -1,4 +1,4 @@
-const Joi = require('joi');
+import Joi = require("joi");
 
 const fieldsMissing = 'All fields must be filled';
 

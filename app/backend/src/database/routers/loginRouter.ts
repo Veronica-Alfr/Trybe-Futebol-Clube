@@ -4,9 +4,9 @@ import LoginService from '../services/loginService';
 
 const loginRouter = Router();
 
-// const loginService = new LoginService();
-// const loginController = new LoginController(loginService);
+const loginService = new LoginService();
+const loginController = new LoginController(loginService);
 
-// loginRouter.post('/', loginController.login);
+loginRouter.post('/', loginController.login);
 
 export default loginRouter;
