@@ -7,6 +7,6 @@ const loginRouter = Router();
 const loginService = new LoginService();
 const loginController = new LoginController(loginService);
 
-loginRouter.post('/', loginController.login);
+loginRouter.post('/', (req, res) => loginController.login(req, res));
 
 export default loginRouter;

@@ -8,18 +8,18 @@ export default class LoginService {
 
     public login = async (email: string, password: string): Promise<string> => {  
        const user = await User.findOne({
-       where: { email, password },
+       where: { email },
     });
 
-    if (!user || !compareSync(password, user.password) || user.email !== email) {
+    if (!user || !compareSync(password, user.password)) {
         const e = new Error('Incorrect email or passwords');
         e.name = 'UnauthorizedUserError';
         throw e;
     }
-    const { password: _, ...userWithoutPass } = user; // só user ?
+    const { password: _, ...userWithoutPass } = user;
 
     const token = JwtService.sign(userWithoutPass);
 
     return token;
-}
+  }
 }

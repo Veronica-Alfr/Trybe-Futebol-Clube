@@ -9,6 +9,7 @@ export const validateUser = (body: object) => {
     }),
     password: Joi.string().required().min(7).messages({
         'string.empty': fieldsMissing,
+        'string.required': fieldsMissing,
     })
 });
 
