@@ -1,8 +1,6 @@
 import User from "../models/user";
 import { JwtService } from "./jwtService";
 import { compareSync } from 'bcryptjs';
-// import { Request, Response } from 'express';
-// import VerifyToken from "../middlewares/token/tokenVerify";
 
 export default class LoginService {
     public login = async (email: string, password: string): Promise<string> => {  
@@ -21,10 +19,4 @@ export default class LoginService {
 
     return token;
   }
-
-  // public verifyToken = () => {
-  //   const data = VerifyToken.verifyToken();
-  //   const { role } = data;
-  //   return role;
-  // }
 }
