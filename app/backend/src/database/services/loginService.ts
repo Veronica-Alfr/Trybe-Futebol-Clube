@@ -11,7 +11,7 @@ export default class LoginService {
     });
 
     if (!user || !compareSync(password, user.password)) {
-        const e = new Error('Incorrect email or passwords');
+        const e = new Error('Incorrect email or password');
         e.name = 'Unauthorized';
         throw e;
     }
