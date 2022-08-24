@@ -9,6 +9,6 @@ const loginService = new LoginService();
 const loginController = new LoginController(loginService);
 
 loginRouter.post('/', (req, res) => loginController.login(req, res));
-loginRouter.get('/validate', Jwt.verifyToken, loginController.verifyToken)
+loginRouter.get('/validate', Jwt.verifyToken, loginController.verifyToken);
 
 export default loginRouter;
