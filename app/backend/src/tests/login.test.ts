@@ -5,7 +5,7 @@ import chaiHttp = require('chai-http');
 import { app } from '../app';
 import User from '../database/models/user';
 import ILogin from '../database/interfaces/ILogin';
-import LoginService from '../database/services/loginService';
+import IUser from '../database/interfaces/IUser';
 import { JwtService } from '../database/services/jwtService';
 
 chai.use(chaiHttp);
@@ -13,11 +13,8 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 const loginMock: ILogin = {
-  // id: 1,
   email: 'admin@admin.com',
   password: 'secret_admin',
-  // username: 'Admin',
-  // role: "admin"
 }
 
 const loginMockTwo: ILogin = {
@@ -25,10 +22,20 @@ const loginMockTwo: ILogin = {
   password: '$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW',
 }
 
+const userMock: IUser = {
+  id: 1,
+  email: 'admin@admin.com',
+  password: 'secret_admin',
+  username: 'Admin',
+  role: "admin"
+}
+
 describe('User', () => {
   describe('Login', () => {
     beforeEach(async () => {
-      sinon.stub(User, "findOne").resolves(loginMockTwo as User); // pq não LoginService e sim User para findOne não reclamar?
+      sinon.stub(User, "findOne").resolves(loginMockTwo as User);
+      sinon.stub(JwtService, "sign").resolves('token');
+      sinon.stub(, "").resolves('');
     });
   
     afterEach(() => {
@@ -43,17 +50,12 @@ describe('User', () => {
     expect(response.status).to.equal(200);
   })
 
-    // it('should return a token', async () => {
-    //   const response = await chai.request(app)
-    //     .post('/login')
-    //     .send(loginMock);
+    it('should return a token', async () => {
+      const response = await chai.request(app)
+        .post('/login')
+        .send(loginMock);
 
-    //     const { password: _, ...userWithoutPass } = loginMock;
-    //     const token = JwtService.sign(userWithoutPass);
-
-    //     alterei o id? em ILogin, e joguei o id que estava em IUser para ILogin
-
-    //   expect(response.body).to.equal(token);
-    // })
+      expect(response.body).to.be.deep.equal({token: 'token'});
+    })
   })
 });
