@@ -16,7 +16,8 @@ export default class LoginController {
    };
 
    verifyToken(req: Request, res: Response): object {
-        const { role } = req.body.user.dataValues;
+        const { role } = req.body.user;
+        console.log(req.body);
 
         return res.status(200).json({ role });
    }

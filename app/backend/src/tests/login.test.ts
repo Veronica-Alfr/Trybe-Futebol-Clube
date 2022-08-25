@@ -9,7 +9,6 @@ import { app } from '../app';
 import User from '../database/models/user';
 import ILogin from '../database/interfaces/ILogin';
 import IUser from '../database/interfaces/IUser';
-// import 'dotenv/config';
 
 chai.use(chaiHttp);
 
@@ -75,16 +74,13 @@ describe('User', () => {
         })
       })
     });
-    // daqui pra baixo nada funciona
+
     describe('If token is verify', () => {
       describe('If token is validate return status 200 and user role', () => {
-        // beforeEach( () => {
-        //   sinon.stub(jwt, 'verify').returns();
-        // });
 
         let token: string;
   
-        it('should return status 200 e property token', async () => {
+        it('should return status 200 para requisição do token', async () => {
           sinon.stub(User, "findOne").resolves(userMock as User);
           sinon.stub(bcryptjs, "compareSync").returns(true);
 
@@ -94,30 +90,29 @@ describe('User', () => {
           
             token = response.body.token
 
-            console.log(token)
-
             expect(response.status).to.equal(200);
 
             sinon.restore();
       })
 
-        it('should return status 200', async () => {
+        it('should return status 200 for validate token', async () => {
           const response = await chai.request(app)
             .get('/login/validate')
             .set({ 'Authorization': token });
 
             console.log(response.body);
+            console.log(response.body.user.role);
 
             expect(response.status).to.equal(200);
         })
 
-        // it('should return user role', async () => {
-        //   const response = await chai.request(app)
-        //     .get('/login/validate')
-        //     .send({ 'Authorization': 'token' });
+        it('should return user role', async () => {
+          const response = await chai.request(app)
+            .get('/login/validate')
+            .send({ 'Authorization': 'token' });
 
-        //     expect(response.body).to.have.property('role'); // to.be.eq({ role: admin })
-        // })
+            expect(response.body.user.role).to.be.eq({ role: 'admin'});
+        })
       })
     });
   });

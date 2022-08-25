@@ -4,7 +4,7 @@ import 'dotenv/config';
 const secret = process.env.JWT_SECRET || ""
 
 export class JwtService {
-  static sign(payload: { id: number, email: string }): string {
+  static sign(payload: { id: number, email: string, role: string }): string {
     return jwt.sign(payload, secret);
   }
 }

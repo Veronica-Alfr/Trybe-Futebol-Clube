@@ -13,9 +13,8 @@ export default class LoginService {
         e.name = 'Unauthorized';
         throw e;
     }
-    const { password: _, ...userWithoutPass } = user;
-
-    const token = JwtService.sign(userWithoutPass);
+    const  { id, role } = user;
+    const token = JwtService.sign({ id, email, role });
 
     return token;
   }
