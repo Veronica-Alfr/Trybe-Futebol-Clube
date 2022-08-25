@@ -9,8 +9,7 @@ import { app } from '../app';
 import User from '../database/models/user';
 import ILogin from '../database/interfaces/ILogin';
 import IUser from '../database/interfaces/IUser';
-import { JwtService } from '../database/services/jwtService';
-import Jwt from '../database/middlewares/token/tokenVerify';
+// import 'dotenv/config';
 
 chai.use(chaiHttp);
 
@@ -33,6 +32,12 @@ const userMock: IUser = {
   username: 'Admin',
   role: "admin"
 }
+
+const dataValues = {
+  role: 'admin'
+}
+
+// const secret = process.env.JWT_SECRET || "";
 
 describe('User', () => {
   beforeEach(() => {
@@ -72,15 +77,26 @@ describe('User', () => {
     });
 
     describe('If token is verify', () => {
+      describe('If token is validate return status 200 and user role', () => {
         beforeEach( () => {
-          sinon.stub(jwt, 'verify').returns()
+          sinon.stub(jwt, 'verify').returns(); // returns()
         });
 
-        it('should return ', async () => {
+        it('should return status 200', async () => {
           const response = await chai.request(app)
-            .post('/login')
-            .send(loginMock);
+            .get('/login/validate')
+            .send({ 'Authorization': 'token'});
 
+            expect(response.status).to.equal(200);
+        })
+
+        it('should return user role', async () => {
+          const response = await chai.request(app)
+            .get('/login/validate')
+            .send({ 'Authorization': 'token'});
+
+            expect(response.body).to.have.property('role');
+        })
       })
     });
   });
