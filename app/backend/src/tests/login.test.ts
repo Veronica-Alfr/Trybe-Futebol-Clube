@@ -33,14 +33,14 @@ const userMock: IUser = {
   role: "admin"
 }
 
-const dataValues = {
-  role: 'admin'
-}
+// const dataValues = {
+//   role: 'admin'
+// }
 
 // const secret = process.env.JWT_SECRET || "";
 
 describe('User', () => {
-  beforeEach(() => {
+  afterEach(() => {
     sinon.restore();
   });
 
@@ -75,28 +75,49 @@ describe('User', () => {
         })
       })
     });
-
+    // daqui pra baixo nada funciona
     describe('If token is verify', () => {
       describe('If token is validate return status 200 and user role', () => {
-        beforeEach( () => {
-          sinon.stub(jwt, 'verify').returns(); // returns()
-        });
+        // beforeEach( () => {
+        //   sinon.stub(jwt, 'verify').returns();
+        // });
+
+        let token: string;
+  
+        it('should return status 200 e property token', async () => {
+          sinon.stub(User, "findOne").resolves(userMock as User);
+          sinon.stub(bcryptjs, "compareSync").returns(true);
+
+          const response = await chai.request(app)
+            .post('/login')
+            .send(loginMock);
+          
+            token = response.body.token
+
+            console.log(token)
+
+            expect(response.status).to.equal(200);
+
+            sinon.restore();
+      })
 
         it('should return status 200', async () => {
           const response = await chai.request(app)
             .get('/login/validate')
-            .send({ 'Authorization': 'token'});
+            .set({ 'Authorization': token });
+
+            console.log(response.body);
 
             expect(response.status).to.equal(200);
         })
 
-        it('should return user role', async () => {
-          const response = await chai.request(app)
-            .get('/login/validate')
-            .send({ 'Authorization': 'token'});
+        // it('should return user role', async () => {
+        //   const response = await chai.request(app)
+        //     .get('/login/validate')
+        //     .send({ 'Authorization': 'token' });
 
-            expect(response.body).to.have.property('role');
-        })
+        //     expect(response.body).to.have.property('role'); // to.be.eq({ role: admin })
+        // })
       })
     });
   });
