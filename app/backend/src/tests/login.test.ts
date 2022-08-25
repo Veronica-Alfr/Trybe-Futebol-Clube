@@ -1,7 +1,7 @@
 import * as sinon from 'sinon';
 import * as chai from 'chai';
 import * as bcryptjs from 'bcryptjs';
-import * as jwt from 'jsonwebtoken';
+// import * as jwt from 'jsonwebtoken';
 
 // @ts-ignore
 import chaiHttp = require('chai-http');
@@ -31,10 +31,6 @@ const userMock: IUser = {
   username: 'Admin',
   role: "admin"
 }
-
-// const dataValues = {
-//   role: 'admin'
-// }
 
 // const secret = process.env.JWT_SECRET || "";
 
@@ -100,18 +96,15 @@ describe('User', () => {
             .get('/login/validate')
             .set({ 'Authorization': token });
 
-            console.log(response.body);
-            console.log(response.body.user.role);
-
             expect(response.status).to.equal(200);
         })
 
         it('should return user role', async () => {
           const response = await chai.request(app)
             .get('/login/validate')
-            .send({ 'Authorization': 'token' });
+            .set({ 'Authorization': token });
 
-            expect(response.body.user.role).to.be.eq({ role: 'admin'});
+            expect(response.body).to.deep.equal({ role: 'admin' });
         })
       })
     });
