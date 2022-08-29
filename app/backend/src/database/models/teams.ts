@@ -13,7 +13,7 @@ Team.init({
     primaryKey: true,
     autoIncrement: true,
   },
-  team_name: {
+  teamName: {
     type: STRING,
     allowNull: false,
   }
