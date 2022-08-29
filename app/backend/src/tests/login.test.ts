@@ -1,7 +1,7 @@
 import * as sinon from 'sinon';
 import * as chai from 'chai';
 import * as bcryptjs from 'bcryptjs';
-// import * as jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 
 // @ts-ignore
 import chaiHttp = require('chai-http');
@@ -32,7 +32,9 @@ const userMock: IUser = {
   role: "admin"
 }
 
-// const secret = process.env.JWT_SECRET || "";
+const mockErrorTokenVerify extends Error {
+  name = 'Token must be a valid token',
+}
 
 describe('User', () => {
   afterEach(() => {
@@ -106,7 +108,23 @@ describe('User', () => {
 
             expect(response.body).to.deep.equal({ role: 'admin' });
         })
-      })
+      });
+
+      describe('If token is verify, but is invalid', () => {
+        describe('If token is invalid return status 401 and error message', () => {
+          it('should return status 401', async () => {
+            sinon.stub(jwt, "sign").callsFake(() => {
+              throw new mockErrorTokenVerify(); // está funcionando?
+            })
+      
+            const response = await chai.request(app)
+              .post('/login/validate')
+              .send() // está correto?
+      
+            expect(response.status).to.equal(401)
+            sinon.restore()
+        })
+      });
     });
   });
 });
