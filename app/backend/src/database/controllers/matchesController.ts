@@ -38,7 +38,7 @@ export default class MatchController {
 
     await this.matchService.finish(Number(id));
 
-    return res.status(201).json('Finished');
+    return res.status(200).json('Finished');
   }
 
   async changeMatchResult(req: Request, res: Response): Promise<object> {
