@@ -1,7 +1,7 @@
-import { IService } from "../interfaces/IService";
+import { ITeamService } from "../interfaces/ITeamService";
 import Team from "../models/teams";
 
-export default class TeamService implements IService<Team>{
+export default class TeamService implements ITeamService {
     async list(): Promise<Team[]> {
         const allTeams = await Team.findAll();
         return allTeams;
