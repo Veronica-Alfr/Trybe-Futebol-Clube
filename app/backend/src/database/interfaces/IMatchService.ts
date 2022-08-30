@@ -5,4 +5,5 @@ export interface IMatchService {
     list(): Promise<Match[]>,
     listInProgress(inProgress: boolean): Promise<Match[]>,
     create({ homeTeam, awayTeam, homeTeamGoals, awayTeamGoals }: IMatchCreate): Promise<Match>,
+    finish(id: number): Promise<void>,
 }

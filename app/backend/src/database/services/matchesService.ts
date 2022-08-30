@@ -33,4 +33,8 @@ export default class MatchService implements IMatchService {
 
         return matchCreate;
     };
+
+    async finish(id: number): Promise<void> {
+        await Match.update({ inProgress: false }, { where: { id } });
+    }
 };
