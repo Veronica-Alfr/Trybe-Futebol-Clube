@@ -27,7 +27,7 @@ export default class MatchController {
       e.name = 'Unauthorized';
       throw e;
     }
-
+    // a lógica do req 26 se trata do metodo byId de Team. Colocar o erro caso o team não exista aqui.
     const matchCreate = await this.matchService.create(req.body);
 
     return res.status(201).json(matchCreate);
@@ -39,5 +39,13 @@ export default class MatchController {
     await this.matchService.finish(Number(id));
 
     return res.status(201).json('Finished');
+  }
+
+  async changeMatchResult(req: Request, res: Response): Promise<object> {
+    const { id } = req.params;
+
+    await this.matchService.changeMatchResult(Number(id), req.body);
+
+    return res.status(200).json('The match goals values have been successfully changed!');
   }
 }

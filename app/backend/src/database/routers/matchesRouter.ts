@@ -11,5 +11,6 @@ const matchController = new MatchController(matchService);
 matchRouter.get('/', (req, res) => matchController.list(req, res));
 matchRouter.post('/', Jwt.verifyToken, (req, res) => matchController.create(req, res));
 matchRouter.patch('/:id/finish', (req, res) => matchController.finish(req, res));
+matchRouter.patch('/:id', (req, res) => matchController.changeMatchResult(req, res));
 
 export default matchRouter;

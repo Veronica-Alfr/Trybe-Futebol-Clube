@@ -36,5 +36,10 @@ export default class MatchService implements IMatchService {
 
     async finish(id: number): Promise<void> {
         await Match.update({ inProgress: false }, { where: { id } });
+        // retornar linhas afetadas ?
+    }
+
+    async changeMatchResult(id: number, { homeTeamGoals, awayTeamGoals }: IMatchCreate): Promise<void> {
+        await Match.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
     }
 };
