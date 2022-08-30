@@ -35,7 +35,7 @@ Match.init({
     allowNull: false,
   },
   inProgress: {
-    type: BOOLEAN, // boolean or number ?
+    type: BOOLEAN,
     allowNull: false,
   },
 }, {

@@ -1,3 +1,4 @@
+import { IMatchCreate } from "../interfaces/IMatchCreate";
 import { IMatchService } from "../interfaces/IMatchService";
 import Match from "../models/matches";
 import Team from "../models/teams";
@@ -24,5 +25,12 @@ export default class MatchService implements IMatchService {
             where: { inProgress }
         });
         return matchesInProgress;
+    };
+
+    async create({ homeTeam, awayTeam, homeTeamGoals, awayTeamGoals }: IMatchCreate): Promise<Match> {
+        const matchCreate = await Match
+        .create({ homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress: true });
+
+        return matchCreate;
     };
 };

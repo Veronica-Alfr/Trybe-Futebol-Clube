@@ -17,5 +17,19 @@ export default class MatchController {
     const matchesInProgress = await this.matchService.listInProgress(inProgress === 'true');
     
     return res.status(200).json(matchesInProgress);
-  }
+  };
+
+  async create(req: Request, res: Response): Promise<object> {
+    const { homeTeam, awayTeam } = req.body;
+
+    if (homeTeam === awayTeam) {
+      const e = new Error('It is not possible to create a match with two equal teams');
+      e.name = 'Unauthorized';
+      throw e;
+    }
+
+    const matchCreate = await this.matchService.create(req.body);
+
+    return res.status(201).json(matchCreate);
+  };
 }
