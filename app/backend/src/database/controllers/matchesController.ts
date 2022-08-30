@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
 import { IMatchService } from '../interfaces/IMatchService';
+import { ITeamService } from '../interfaces/ITeamService';
 
 export default class MatchController {
 
-  constructor(private matchService: IMatchService) { }
+  constructor(private matchService: IMatchService, private teamService: ITeamService) { }
 
   async list(req: Request, res: Response): Promise<object> {
     const { inProgress } = req.query;
@@ -27,7 +28,9 @@ export default class MatchController {
       e.name = 'Unauthorized';
       throw e;
     }
-    // a lógica do req 26 se trata do metodo byId de Team. Colocar o erro caso o team não exista aqui.
+
+    await this.teamService.listById(homeTeam) // awayTeam não funciona nesse caso, pois é uma filha/foreign key
+
     const matchCreate = await this.matchService.create(req.body);
 
     return res.status(201).json(matchCreate);

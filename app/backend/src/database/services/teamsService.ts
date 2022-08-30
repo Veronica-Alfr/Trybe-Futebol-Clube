@@ -9,6 +9,13 @@ export default class TeamService implements ITeamService {
 
     async listById(id: number): Promise<Team | null> {
         const team = await Team.findByPk(id);
+
+        if (!team) {
+           const e = new Error('There is no team with such id!');
+           e.name = 'NotFound';
+           throw e;
+        }
+
         return team;
     }
 };
