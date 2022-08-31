@@ -1,6 +1,7 @@
 import { ITeamsAndMatchs } from "../interfaces/ILeaderBoardService";
 import Match from "../models/matches";
 import Team from "../models/teams";
+// import ILeaderBoard from '../interfaces/ILeaderBoard';
 
 export default class LeaderBoardService {
     async getLeaderBorder() {
@@ -14,15 +15,34 @@ export default class LeaderBoardService {
     };
 
      calculateLeaderBorder(teams: ITeamsAndMatchs[]) {
-        const totalPoints = teams.map((team, index) => {
-            const winnerOrNot = team.teamHome[index].homeTeamGoals > team.teamHome[index].awayTeamGoals ? 3 : 0
-            const empate = team.teamHome[index].homeTeamGoals === team.teamHome[index].awayTeamGoals ? 1 : winnerOrNot;
-            return winnerOrNot + empate;
-        }); // fazer com redux
 
-        return teams.map((team) => {
-           return { name: team.teamName, totalPoints }
-        });
+        const initialsValuesLeaderBoard = {
+            name: '',
+            totalPoints: 0,
+            totalGames: 0,
+            totalVictories: 0,
+            totalDraws: 0,
+            totalLosses: 0,
+            goalsFavor: 0,
+            goalsOwn: 0,
+            goalsBalance: 0,
+            efficiency: '0.00',
+        };
+
+        const totalPoints = teams.map((team) => {
+            initialsValuesLeaderBoard.name = team.teamName;
+            return team.teamHome.reduce((acc, curr) => {
+                acc.totalPoints += curr.homeTeamGoals > curr.awayTeamGoals ? 3 : 0;
+                acc.totalPoints += curr.homeTeamGoals === curr.awayTeamGoals ? 1 : 0;
+
+               return acc;
+            }, initialsValuesLeaderBoard);
+        }); 
+        console.log(totalPoints);
+        return totalPoints;
+        // return teams.map((team) => {
+        //    return { name: team.teamName }
+        // });
     }
 
 }
