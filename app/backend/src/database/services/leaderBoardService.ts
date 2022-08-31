@@ -27,14 +27,28 @@ export default class LeaderBoardService {
                 goalsFavor: 0,
                 goalsOwn: 0,
                 goalsBalance: 0,
-                efficiency: '0.00',
+                efficiency: 0,
             }; 
 
             team.teamHome.reduce((acc, curr) => {
                 acc.totalPoints += curr.homeTeamGoals > curr.awayTeamGoals ? 3 : 0;
                 acc.totalPoints += curr.homeTeamGoals === curr.awayTeamGoals ? 1 : 0;
 
-                
+                acc.totalGames = team.teamHome.length;
+
+                acc.totalVictories += curr.homeTeamGoals > curr.awayTeamGoals ? 1 : 0;
+
+                acc.totalDraws += curr.homeTeamGoals === curr.awayTeamGoals ? 1 : 0;
+
+                acc.totalLosses += curr.homeTeamGoals < curr.awayTeamGoals ? 1 : 0;
+
+                const golsFavor = acc.goalsFavor += curr.homeTeamGoals;
+
+                const golsOwn = acc.goalsOwn += curr.awayTeamGoals;
+
+                acc.goalsBalance = golsFavor - golsOwn;
+
+                acc.efficiency = acc.totalPoints;
 
             return acc;
                 }, initialsValuesLeaderBoard);
@@ -47,7 +61,6 @@ export default class LeaderBoardService {
         //    return { name: team.teamName }
         // });
     }
-
 }
 
 // - `Classificação`: Posição na classificação;
