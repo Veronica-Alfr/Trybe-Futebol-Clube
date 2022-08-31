@@ -10,13 +10,21 @@ export default class LeaderBoardService {
                 attributes: ['teamName']
         }) as unknown as ITeamsAndMatchs[];
         return this.calculateLeaderBorder(teams);
+        // return teams;
     };
 
      calculateLeaderBorder(teams: ITeamsAndMatchs[]) {
+        const totalPoints = teams.map((team, index) => {
+            const winnerOrNot = team.teamHome[index].homeTeamGoals > team.teamHome[index].awayTeamGoals ? 3 : 0
+            const empate = team.teamHome[index].homeTeamGoals === team.teamHome[index].awayTeamGoals ? 1 : winnerOrNot;
+            return winnerOrNot + empate;
+        }); // fazer com redux
+
         return teams.map((team) => {
-           return { name: team.teamName }
+           return { name: team.teamName, totalPoints }
         });
     }
+
 }
 
 // - `Classificação`: Posição na classificação;
