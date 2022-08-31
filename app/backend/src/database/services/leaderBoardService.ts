@@ -16,27 +16,30 @@ export default class LeaderBoardService {
 
      calculateLeaderBorder(teams: ITeamsAndMatchs[]) {
 
-        const initialsValuesLeaderBoard = {
-            name: '',
-            totalPoints: 0,
-            totalGames: 0,
-            totalVictories: 0,
-            totalDraws: 0,
-            totalLosses: 0,
-            goalsFavor: 0,
-            goalsOwn: 0,
-            goalsBalance: 0,
-            efficiency: '0.00',
-        };
-
         const totalPoints = teams.map((team) => {
-            initialsValuesLeaderBoard.name = team.teamName;
-            return team.teamHome.reduce((acc, curr) => {
+            const initialsValuesLeaderBoard = {
+                name: team.teamName,
+                totalPoints: 0,
+                totalGames: 0,
+                totalVictories: 0,
+                totalDraws: 0,
+                totalLosses: 0,
+                goalsFavor: 0,
+                goalsOwn: 0,
+                goalsBalance: 0,
+                efficiency: '0.00',
+            }; 
+
+            team.teamHome.reduce((acc, curr) => {
                 acc.totalPoints += curr.homeTeamGoals > curr.awayTeamGoals ? 3 : 0;
                 acc.totalPoints += curr.homeTeamGoals === curr.awayTeamGoals ? 1 : 0;
 
-               return acc;
-            }, initialsValuesLeaderBoard);
+                
+
+            return acc;
+                }, initialsValuesLeaderBoard);
+
+            return initialsValuesLeaderBoard;
         }); 
         console.log(totalPoints);
         return totalPoints;
