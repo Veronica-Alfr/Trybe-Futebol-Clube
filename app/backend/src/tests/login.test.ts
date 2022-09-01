@@ -32,9 +32,9 @@ const userMock: IUser = {
   role: "admin"
 }
 
-const mockErrorTokenVerify extends Error {
-  name = 'Token must be a valid token',
-}
+// const mockErrorTokenVerify = {
+//   name = 'Token must be a valid token',
+// }
 
 describe('User', () => {
   afterEach(() => {
@@ -114,7 +114,7 @@ describe('User', () => {
         describe('If token is invalid return status 401 and error message', () => {
           it('should return status 401', async () => {
             sinon.stub(jwt, "sign").callsFake(() => {
-              throw new mockErrorTokenVerify(); // está funcionando?
+              // throw new mockErrorTokenVerify(); // está funcionando?
             })
       
             const response = await chai.request(app)
@@ -127,4 +127,5 @@ describe('User', () => {
       });
     });
   });
+})
 });
