@@ -1,7 +1,7 @@
 import LeaderboardService from "../services/leaderboardService";
 import { Request, Response } from 'express';
 
-export default class LeaderBoardController {
+export default class LeaderboardController {
     constructor(private leaderBoardService: LeaderboardService) {} 
 
     async getLeaderBorder(_req: Request, res: Response): Promise<object> {
