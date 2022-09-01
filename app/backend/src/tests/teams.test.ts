@@ -16,15 +16,20 @@ const mockTeams: ITeam[] = [
     id: 1,
     teamName: 'São Paulo',
    }
-]
+];
+
+const mockTeam: ITeam = {
+    id: 1,
+    teamName: 'São Paulo'
+};
 
 describe('Teams', () => {
     afterEach(() => {
       sinon.restore();
     });
   
-    describe('Team', () => {
-      describe('If Team have sucess', () => {
+    describe('findAll', () => {
+      describe('If Team have sucess when return everything', () => {
         beforeEach(async () => {
           sinon.stub(Team, "findAll").resolves(mockTeams as Team[]);
         });
@@ -34,9 +39,24 @@ describe('Teams', () => {
             .get('/teams');
     
         expect(response.status).to.equal(200);
-      })
+      });
     });
-  
+
+    describe('findByPk', () => {
+        describe('If Team have sucess when return just one team', () => {
+          beforeEach(async () => {
+            sinon.stub(Team, "findByPk").resolves(mockTeam as Team);
+          });
+    
+          it('should return status 200', async () => {
+            const response = await chai.request(app)
+              .get('/teams/1');
+      
+          expect(response.status).to.equal(200);
+        });
+      });
+    });
+
     //   describe('If Login fail', () => {
     //     describe('If user return null', () => {
     //       beforeEach(() => {
@@ -51,5 +71,6 @@ describe('Teams', () => {
     //       })
     //     })
     //   });
+
    })
 });
