@@ -19,11 +19,6 @@ const loginMock: ILogin = {
   password: 'secret_admin',
 }
 
-// const loginMockTwo: ILogin = {
-//   email: 'admin@admin.com',
-//   password: '$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW',
-// }
-
 const userMock: IUser = {
   id: 1,
   email: 'admin@admin.com',
@@ -32,9 +27,10 @@ const userMock: IUser = {
   role: "admin"
 }
 
-// const mockErrorTokenVerify = {
-//   name = 'Token must be a valid token',
-// }
+const mockErrorTokenVerify = {
+  message: 'Token must be a valid token',
+  name: 'Unauthorized'
+}
 
 describe('User', () => {
   afterEach(() => {
@@ -113,19 +109,16 @@ describe('User', () => {
       describe('If token is verify, but is invalid', () => {
         describe('If token is invalid return status 401 and error message', () => {
           it('should return status 401', async () => {
-            sinon.stub(jwt, "sign").callsFake(() => {
-              // throw new mockErrorTokenVerify(); // está funcionando?
-            })
+            sinon.stub(jwt, "sign").throws(mockErrorTokenVerify);
       
             const response = await chai.request(app)
-              .post('/login/validate')
-              .send() // está correto?
+              .get('/login/validate');
       
             expect(response.status).to.equal(401)
             sinon.restore()
         })
       });
-    });
-  });
-})
+     });
+   });
+  })
 });

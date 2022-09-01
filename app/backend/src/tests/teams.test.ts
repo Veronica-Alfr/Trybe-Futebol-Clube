@@ -71,19 +71,19 @@ describe('Teams', () => {
       });
     });
 
-    //   describe('If Team fail when return just one team', () => {
-    //     describe('If Team return error 404', () => {
-    //       beforeEach(() => {
-    //         sinon.stub().resolves();
-    //       })
-    //       it('should return a status 404', async () => {
-    //         const response = await chai.request(app)
-    //           .get('/teams/1');
+      describe('If Team fail when return just one team', () => {
+        describe('If Team return error 404', () => {
+          beforeEach(() => {
+            sinon.stub(Team, 'findByPk').resolves(false as unknown as Team);
+          })
+          it('should return a status 404', async () => {
+            const response = await chai.request(app)
+              .get('/teams/1');
         
-    //         expect(response.status).to.equal(404);
-    //       })
-    //     })
-    //   });
+            expect(response.status).to.equal(404);
+          })
+        })
+      });
 
    })
 });
