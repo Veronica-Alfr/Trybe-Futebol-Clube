@@ -38,7 +38,14 @@ describe('Teams', () => {
           const response = await chai.request(app)
             .get('/teams');
     
-        expect(response.status).to.equal(200);
+          expect(response.status).to.equal(200);
+      });
+
+      it('should return Team body', async () => {
+          const response = await chai.request(app)
+            .get('/teams');
+  
+        expect(response.body).to.be.deep.equal(mockTeams);
       });
     });
 
@@ -54,20 +61,26 @@ describe('Teams', () => {
       
           expect(response.status).to.equal(200);
         });
+
+          it('should return Team body', async () => {
+            const response = await chai.request(app)
+              .get('/teams/1');
+
+          expect(response.body).to.be.deep.equal(mockTeam);
+        });
       });
     });
 
-    //   describe('If Login fail', () => {
-    //     describe('If user return null', () => {
+    //   describe('If Team fail when return just one team', () => {
+    //     describe('If Team return error 404', () => {
     //       beforeEach(() => {
     //         sinon.stub().resolves();
     //       })
-    //       it('should return a status 401', async () => {
+    //       it('should return a status 404', async () => {
     //         const response = await chai.request(app)
-    //           .post('/login')
-    //           .send({email: 'invalid@email.com', password: 'any-password'});
+    //           .get('/teams/1');
         
-    //         expect(response.status).to.equal(401);
+    //         expect(response.status).to.equal(404);
     //       })
     //     })
     //   });
