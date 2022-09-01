@@ -1,4 +1,4 @@
-import { IMatchBody } from "../interfaces/IMatchBody";
+import { IMatchGoalsAndTeamId, IMatchGoals  } from "../interfaces/IMatchBody";
 import { IMatchService } from "../interfaces/IMatchService";
 import Match from "../models/matches";
 import Team from "../models/teams";
@@ -27,7 +27,7 @@ export default class MatchService implements IMatchService {
         return matchesInProgress;
     };
 
-    async create({ homeTeam, awayTeam, homeTeamGoals, awayTeamGoals }: IMatchBody): Promise<Match> {
+    async create({ homeTeam, awayTeam, homeTeamGoals, awayTeamGoals }: IMatchGoalsAndTeamId): Promise<Match> {
         const matchCreate = await Match
         .create({ homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress: true });
 
@@ -38,7 +38,7 @@ export default class MatchService implements IMatchService {
         await Match.update({ inProgress: false }, { where: { id } });
     }
 
-    async changeMatchResult(id: number, { homeTeamGoals, awayTeamGoals }: IMatchBody): Promise<void> {
+    async changeMatchResult(id: number, { homeTeamGoals, awayTeamGoals }: IMatchGoals): Promise<void> {
         await Match.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
     }
 };

@@ -1,6 +1,6 @@
 import * as sinon from 'sinon';
 import * as chai from 'chai';
-import { ITeam } from '../database/interfaces/ITeam';
+import { IMatch } from '../database/interfaces/IMatch';
 
 // @ts-ignore
 import chaiHttp = require('chai-http');
@@ -11,83 +11,114 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-// const mockMatches: IMatch = [
-//     {
-//       "id": 1,
-//       "homeTeam": 16,
-//       "homeTeamGoals": 1,
-//       "awayTeam": 8,
-//       "awayTeamGoals": 1,
-//       "inProgress": false,
-//       "teamHome": {
-//         "teamName": "São Paulo"
-//       },
-//       "teamAway": {
-//         "teamName": "Grêmio"
-//       }
-//     },
-//     {
-//       "id": 2,
-//       "homeTeam": 9,
-//       "homeTeamGoals": 1,
-//       "awayTeam": 14,
-//       "awayTeamGoals": 1,
-//       "inProgress": false,
-//       "teamHome": {
-//         "teamName": "Internacional"
-//       },
-//       "teamAway": {
-//         "teamName": "Santos"
-//       }
-//     }
-// ];
+const mockMatches: IMatch[] = [
+    {
+      "id": 1,
+      "homeTeam": 16,
+      "homeTeamGoals": 1,
+      "awayTeam": 8,
+      "awayTeamGoals": 1,
+      "inProgress": false,
+      "teamHome": {
+        "teamName": "São Paulo"
+      },
+      "teamAway": {
+        "teamName": "Grêmio"
+      }
+    },
+    {
+      "id": 2,
+      "homeTeam": 9,
+      "homeTeamGoals": 1,
+      "awayTeam": 14,
+      "awayTeamGoals": 1,
+      "inProgress": false,
+      "teamHome": {
+        "teamName": "Internacional"
+      },
+      "teamAway": {
+        "teamName": "Santos"
+      }
+    }
+];
 
-// describe('Teams', () => {
-//     afterEach(() => {
-//       sinon.restore();
-//     });
+const mockMatchesWithInProgressTrue: IMatch[] = [
+    {
+      "id": 1,
+      "homeTeam": 16,
+      "homeTeamGoals": 1,
+      "awayTeam": 8,
+      "awayTeamGoals": 1,
+      "inProgress": true,
+      "teamHome": {
+        "teamName": "São Paulo"
+      },
+      "teamAway": {
+        "teamName": "Grêmio"
+      }
+    },
+    {
+      "id": 2,
+      "homeTeam": 9,
+      "homeTeamGoals": 1,
+      "awayTeam": 14,
+      "awayTeamGoals": 1,
+      "inProgress": true,
+      "teamHome": {
+        "teamName": "Internacional"
+      },
+      "teamAway": {
+        "teamName": "Santos"
+      }
+    }
+];
+
+describe('Match', () => {
+    afterEach(() => {
+      sinon.restore();
+    });
   
-//     describe('findAll', () => {
-//       describe('If Team have sucess when return everything', () => {
-//         beforeEach(async () => {
-//           sinon.stub(Match, "findAll").resolves(); // mockMatches as Match[]
-//         });
+    describe('findAll', () => {
+      describe('If Match have sucess when return everything', () => {
+        beforeEach(async () => {
+          sinon.stub(Match, "findAll").resolves(mockMatches as unknown as Match[]);
+        });
   
-//         it('should return status 200', async () => {
-//           const response = await chai.request(app)
-//             .get('/matches');
+        it('should return status 200', async () => {
+          const response = await chai.request(app)
+            .get('/matches');
     
-//           expect(response.status).to.equal(200);
-//       });
+          expect(response.status).to.equal(200);
+      });
 
-//       it('should return Team body', async () => {
-//           const response = await chai.request(app)
-//             .get('/matches');
+      it('should return matches body', async () => {
+          const response = await chai.request(app)
+            .get('/matches');
   
-//         // expect(response.body).to.be.deep.equal();
-//       });
-//     });
+        expect(response.body).to.be.deep.equal(mockMatches);
+      });
+    });
 
-    // describe('findByPk', () => {
-    //     describe('If Team have sucess when return just one team', () => {
-    //       beforeEach(async () => {
-    //         sinon.stub(Team, "findByPk").resolves(mockTeam as Team);
-    //       });
+    describe('findAll with inProgress true', () => {
+      describe('If Match have sucess when return everything', () => {
+        beforeEach(async () => {
+            sinon.stub(Match, "findAll").resolves(mockMatchesWithInProgressTrue as unknown as Match[]);
+        });
     
-    //       it('should return status 200', async () => {
-    //         const response = await chai.request(app)
-    //           .get('/teams/1');
-      
-    //       expect(response.status).to.equal(200);
-    //     });
+        it('should return status 200', async () => {
+            const response = await chai.request(app)
+            .get('/matches?inProgress=true');
+    
+            expect(response.status).to.equal(200);
+        });
 
-    //       it('should return Team body', async () => {
-    //         const response = await chai.request(app)
-    //           .get('/teams/1');
-
-    //       expect(response.body).to.be.deep.equal(mockTeam);
-    //     });
-    //   });
-    // });
-//   });
-// });
+        it('should return matches body with inProgress true', async () => {
+            const response = await chai.request(app)
+            .get('/matches?inProgress=true');
+    
+           expect(response.body).to.be.deep.equal(mockMatchesWithInProgressTrue);
+        });
+      });
+    });
+  });
+});
