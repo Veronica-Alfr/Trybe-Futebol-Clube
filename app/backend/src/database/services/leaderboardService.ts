@@ -1,10 +1,10 @@
-import { ITeamsAndMatchs } from "../interfaces/ILeaderBoardService";
+import { ITeamsAndMatchs } from "../interfaces/ILeaderboardService";
 import Match from "../models/matches";
 import Team from "../models/teams";
-// import ILeaderBoard from '../interfaces/ILeaderBoard';
+// import ILeaderboard from '../interfaces/ILeaderboard';
 
 export default class LeaderboardService {
-    async getLeaderBorder() {
+    async getLeaderborder() {
         const teams = await Team.findAll({ 
             include: 
               { model: Match, as: 'teamHome', where: { inProgress: false }}, 
