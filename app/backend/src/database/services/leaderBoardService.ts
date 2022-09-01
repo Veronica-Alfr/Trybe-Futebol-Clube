@@ -27,7 +27,7 @@ export default class LeaderBoardService {
                 goalsFavor: 0,
                 goalsOwn: 0,
                 goalsBalance: 0,
-                efficiency: 0,
+                efficiency: '0.00',
             }; 
 
             team.teamHome.reduce((acc, curr) => {
@@ -48,18 +48,17 @@ export default class LeaderBoardService {
 
                 acc.goalsBalance = golsFavor - golsOwn;
 
-                acc.efficiency = acc.totalPoints;
+                const efficiency = acc.totalPoints/(acc.totalGames*3)*100;
+                acc.efficiency = efficiency.toFixed(2);
 
             return acc;
                 }, initialsValuesLeaderBoard);
 
             return initialsValuesLeaderBoard;
         }); 
-        console.log(totalPoints);
-        return totalPoints;
-        // return teams.map((team) => {
-        //    return { name: team.teamName }
-        // });
+        return totalPoints.sort((a, b) => b.totalPoints - a.totalPoints || 
+        b.totalVictories - a.totalVictories || b.goalsBalance - a.goalsBalance ||
+        b.goalsFavor - a.goalsFavor || b.goalsOwn - a.goalsOwn);
     }
 }
 
