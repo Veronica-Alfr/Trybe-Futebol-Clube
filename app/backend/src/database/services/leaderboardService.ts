@@ -3,7 +3,7 @@ import Match from "../models/matches";
 import Team from "../models/teams";
 // import ILeaderBoard from '../interfaces/ILeaderBoard';
 
-export default class LeaderBoardService {
+export default class LeaderboardService {
     async getLeaderBorder() {
         const teams = await Team.findAll({ 
             include: 
@@ -11,7 +11,6 @@ export default class LeaderBoardService {
                 attributes: ['teamName']
         }) as unknown as ITeamsAndMatchs[];
         return this.calculateLeaderBorder(teams);
-        // return teams;
     };
 
      calculateLeaderBorder(teams: ITeamsAndMatchs[]) {
@@ -61,15 +60,3 @@ export default class LeaderBoardService {
         b.goalsFavor - a.goalsFavor || b.goalsOwn - a.goalsOwn);
     }
 }
-
-// - `Classificação`: Posição na classificação;
-// - `Time`: Nome do time;
-// - `P`: Total de Pontos;
-// - `J`: Total de Jogos;
-// - `V`: Total de Vitórias;
-// - `E`: Total de Empates;
-// - `D`: Total de Derrotas;
-// - `GP`: Gols marcados a favor;
-// - `GC`: Gols sofridos;
-// - `SG`: Saldo total de gols;
-// - `%`: Aproveitamento do time.

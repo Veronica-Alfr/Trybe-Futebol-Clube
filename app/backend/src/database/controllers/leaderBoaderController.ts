@@ -1,11 +1,11 @@
-import LeaderBoardService from "../services/leaderBoardService";
+import LeaderboardService from "../services/leaderboardService";
 import { Request, Response } from 'express';
 
 export default class LeaderBoardController {
-    constructor(private leaderBoardService: LeaderBoardService) {} 
+    constructor(private leaderBoardService: LeaderboardService) {} 
 
     async getLeaderBorder(_req: Request, res: Response): Promise<object> {
-        const namesMatch = await this.leaderBoardService.getLeaderBorder();
-        return res.status(200).json(namesMatch);
+        const leaderboard = await this.leaderBoardService.getLeaderBorder();
+        return res.status(200).json(leaderboard);
     }
 }
