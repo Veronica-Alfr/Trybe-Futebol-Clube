@@ -4,16 +4,16 @@ import Team from "../models/teams";
 // import ILeaderboard from '../interfaces/ILeaderboard';
 
 export default class LeaderboardService {
-    async getLeaderborder() {
-        const teams = await Team.findAll({ 
+    async getLeaderborder(alias: string = 'teamHome') {
+        const teams = await Team.findAll({
             include: 
-              { model: Match, as: 'teamHome', where: { inProgress: false }}, 
+              { model: Match, as: alias, where: { inProgress: false }}, 
                 attributes: ['teamName']
         }) as unknown as ITeamsAndMatchs[];
-        return this.calculateLeaderBorder(teams);
-    };
+        return this.calculateLeaderBorder(teams, alias = 'teamHome');
+    }; // alias = 'teamHome' ?
 
-     calculateLeaderBorder(teams: ITeamsAndMatchs[]) {
+     calculateLeaderBorder(teams: ITeamsAndMatchs[], alias: 'teamHome') {
 
         const totalPoints = teams.map((team) => {
             const initialsValuesLeaderBoard = {
@@ -27,9 +27,9 @@ export default class LeaderboardService {
                 goalsOwn: 0,
                 goalsBalance: 0,
                 efficiency: '0.00',
-            }; 
+            };
 
-            team.teamHome.reduce((acc, curr) => {
+            team[alias].reduce((acc: any, curr: any) => {
                 acc.totalPoints += curr.homeTeamGoals > curr.awayTeamGoals ? 3 : 0;
                 acc.totalPoints += curr.homeTeamGoals === curr.awayTeamGoals ? 1 : 0;
 
@@ -59,4 +59,13 @@ export default class LeaderboardService {
         b.totalVictories - a.totalVictories || b.goalsBalance - a.goalsBalance ||
         b.goalsFavor - a.goalsFavor || b.goalsOwn - a.goalsOwn);
     }
+
+    // async getAwayLeaderborder() {
+    //     const teams = await Team.findAll({ 
+    //         include: 
+    //           { model: Match, as: 'teamAway', where: { inProgress: false }}, 
+    //             attributes: ['teamName']
+    //     }) as unknown as ITeamsAndMatchs[];
+    //     return teams;
+    // };
 }
