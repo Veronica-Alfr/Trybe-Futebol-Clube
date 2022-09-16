@@ -73,6 +73,15 @@ const mockMatchesWithInProgressTrue: IMatch[] = [
     }
 ];
 
+const mockMatchCreate: IMatch = {
+  "id": 1,
+  "homeTeam": 16,
+  "homeTeamGoals": 1,
+  "awayTeam": 8,
+  "awayTeamGoals": 1,
+  "inProgress": false,
+}
+
 describe('Match', () => {
     afterEach(() => {
       sinon.restore();
@@ -118,6 +127,30 @@ describe('Match', () => {
     
            expect(response.body).to.be.deep.equal(mockMatchesWithInProgressTrue);
         });
+      });
+    });
+  });
+
+  describe('create', () => {
+      describe('If Match have sucess when create a match', () => {
+        beforeEach(async () => {
+          sinon.stub(Match, "create").resolves();
+        });
+
+        it('should return status 201', async () => {
+          const response = await chai.request(app)
+            .post('/matches')
+            .send();
+    
+          expect(response.status).to.equal(201);
+      });
+
+      it('should return new match body', async () => {
+          const response = await chai.request(app)
+            .post('/matches')
+            .send();
+
+        // expect(response.body).to.be.deep.equal();
       });
     });
   });
