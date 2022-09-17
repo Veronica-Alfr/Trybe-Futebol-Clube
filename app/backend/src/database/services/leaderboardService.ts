@@ -1,19 +1,20 @@
+import { homeOrTeam } from "../interfaces/Enum";
 import { ITeamsAndMatchs } from "../interfaces/ILeaderboardService";
 import Match from "../models/matches";
 import Team from "../models/teams";
 // import ILeaderboard from '../interfaces/ILeaderboard';
 
 export default class LeaderboardService {
-    async getLeaderborder(alias: string = 'teamHome') {
+    async getLeaderborder(alias: homeOrTeam) {
         const teams = await Team.findAll({
             include: 
               { model: Match, as: alias, where: { inProgress: false }}, 
                 attributes: ['teamName']
         }) as unknown as ITeamsAndMatchs[];
-        return this.calculateLeaderBorder(teams, alias = 'teamHome');
-    }; // alias = 'teamHome' ?
+        return this.calculateLeaderBorder(teams, alias);
+    }; // enum type para teamHome e teamAway
 
-     calculateLeaderBorder(teams: ITeamsAndMatchs[], alias: 'teamHome') {
+     calculateLeaderBorder(teams: ITeamsAndMatchs[], alias: homeOrTeam) {
 
         const totalPoints = teams.map((team) => {
             const initialsValuesLeaderBoard = {

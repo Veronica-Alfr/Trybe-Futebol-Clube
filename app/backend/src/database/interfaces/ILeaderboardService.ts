@@ -1,6 +1,7 @@
 export interface ITeamsAndMatchs {
     teamName: string,
-    teamHome: IMatchsOfTeam[]
+    teamHome: IMatchsOfTeam[],
+    teamAway: IMatchsOfTeam[]
 };
 
 export interface IMatchsOfTeam {
