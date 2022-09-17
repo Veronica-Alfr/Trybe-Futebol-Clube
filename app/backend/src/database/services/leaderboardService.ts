@@ -1,8 +1,7 @@
-import { homeOrTeam } from "../interfaces/Enum";
+import { goals, homeOrTeam } from "../interfaces/Enum";
 import { ITeamsAndMatchs } from "../interfaces/ILeaderboardService";
 import Match from "../models/matches";
 import Team from "../models/teams";
-// import ILeaderboard from '../interfaces/ILeaderboard';
 
 export default class LeaderboardService {
     async getLeaderborder(alias: homeOrTeam) {
@@ -12,7 +11,7 @@ export default class LeaderboardService {
                 attributes: ['teamName']
         }) as unknown as ITeamsAndMatchs[];
         return this.calculateLeaderBorder(teams, alias);
-    }; // enum type para teamHome e teamAway
+    };
 
      calculateLeaderBorder(teams: ITeamsAndMatchs[], alias: homeOrTeam) {
 
@@ -31,20 +30,21 @@ export default class LeaderboardService {
             };
 
             team[alias].reduce((acc: any, curr: any) => {
-                acc.totalPoints += curr.homeTeamGoals > curr.awayTeamGoals ? 3 : 0;
-                acc.totalPoints += curr.homeTeamGoals === curr.awayTeamGoals ? 1 : 0;
+                const homeGoalsOrTeamsGoals = goals[alias] === 'homeTeamGoals' ? 'awayTeamGoals' : 'homeTeamGoals';
+                acc.totalPoints += curr[goals[alias]] > curr[homeGoalsOrTeamsGoals] ? 3 : 0;
+                acc.totalPoints += curr[goals[alias]] === curr[homeGoalsOrTeamsGoals] ? 1 : 0;
 
-                acc.totalGames = team.teamHome.length;
+                acc.totalGames = team[alias].length;
 
-                acc.totalVictories += curr.homeTeamGoals > curr.awayTeamGoals ? 1 : 0;
+                acc.totalVictories += curr[goals[alias]] > curr[homeGoalsOrTeamsGoals] ? 1 : 0;
 
-                acc.totalDraws += curr.homeTeamGoals === curr.awayTeamGoals ? 1 : 0;
+                acc.totalDraws += curr[goals[alias]] === curr[homeGoalsOrTeamsGoals] ? 1 : 0;
 
-                acc.totalLosses += curr.homeTeamGoals < curr.awayTeamGoals ? 1 : 0;
+                acc.totalLosses += curr[goals[alias]] < curr[homeGoalsOrTeamsGoals] ? 1 : 0;
 
-                const golsFavor = acc.goalsFavor += curr.homeTeamGoals;
+                const golsFavor = acc.goalsFavor += curr[goals[alias]];
 
-                const golsOwn = acc.goalsOwn += curr.awayTeamGoals;
+                const golsOwn = acc.goalsOwn += curr[homeGoalsOrTeamsGoals];
 
                 acc.goalsBalance = golsFavor - golsOwn;
 
@@ -60,13 +60,4 @@ export default class LeaderboardService {
         b.totalVictories - a.totalVictories || b.goalsBalance - a.goalsBalance ||
         b.goalsFavor - a.goalsFavor || b.goalsOwn - a.goalsOwn);
     }
-
-    // async getAwayLeaderborder() {
-    //     const teams = await Team.findAll({ 
-    //         include: 
-    //           { model: Match, as: 'teamAway', where: { inProgress: false }}, 
-    //             attributes: ['teamName']
-    //     }) as unknown as ITeamsAndMatchs[];
-    //     return teams;
-    // };
 }
