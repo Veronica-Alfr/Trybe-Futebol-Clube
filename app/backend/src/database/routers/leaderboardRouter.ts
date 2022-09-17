@@ -7,6 +7,7 @@ const leaderboardRouter = Router();
 const leaderboardService = new LeaderboardService();
 const leaderboardController = new LeaderboardController(leaderboardService);
 
+leaderboardRouter.get('/', (req, res) => leaderboardController.generalHanking(req, res));
 leaderboardRouter.get('/home', (req, res) => leaderboardController.getLeaderBorder(req, res));
 leaderboardRouter.get('/away', (req, res) => leaderboardController.getAwayLeaderBorder(req, res));
 

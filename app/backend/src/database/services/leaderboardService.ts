@@ -60,4 +60,42 @@ export default class LeaderboardService {
         b.totalVictories - a.totalVictories || b.goalsBalance - a.goalsBalance ||
         b.goalsFavor - a.goalsFavor || b.goalsOwn - a.goalsOwn);
     }
+
+    async generalRanking() {
+        const homeTeam = (await this.getLeaderborder(homeOrTeam.teamHome));
+        // e dps fazer um objeto chamando adentrando os resultados dentro do array.
+
+        const awayTeam = (await this.getLeaderborder(homeOrTeam.teamAway));
+
+        const ranking = homeTeam.map((home) => {
+            const initialsValuesLeaderBoard = {
+                name: home.name,
+                totalPoints: 0,
+                totalGames: 0,
+                totalVictories: 0,
+                totalDraws: 0,
+                totalLosses: 0,
+                goalsFavor: 0,
+                goalsOwn: 0,
+                goalsBalance: 0,
+                efficiency: '0.00',
+            };
+
+            awayTeam.reduce((acc, curr) => {
+                acc.totalPoints = home.totalPoints + curr.totalPoints
+                // acc.totalGames += home.totalGames
+                // acc.totalVictories += home.totalVictories
+                // acc.totalDraws += home.totalDraws,
+                // acc.totalLosses += home.totalLosses,
+                // acc.goalsFavor += home.goalsFavor,
+                // acc.goalsFavor += home.goalsFavor,
+                // acc.goalsBalance += home.goalsBalance,
+                // acc.efficiency += home.efficiency // está errado, arrumar dps de testar
+
+                return acc;
+            }, initialsValuesLeaderBoard);
+        });
+
+        return ranking;
+    }
 }

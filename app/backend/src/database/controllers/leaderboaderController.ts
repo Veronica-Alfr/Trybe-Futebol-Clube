@@ -14,4 +14,10 @@ export default class LeaderboardController {
         const awayLeaderboard = await this.leaderBoardService.getLeaderborder(homeOrTeam.teamAway);
         return res.status(200).json(awayLeaderboard);
     }
+
+    async generalHanking(_req: Request, res: Response): Promise<object> {
+        const hanking = await this.leaderBoardService.generalRanking();
+        return res.status(200).json(hanking);
+    }
 }
+    
