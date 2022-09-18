@@ -63,37 +63,28 @@ export default class LeaderboardService {
 
     async generalRanking() {
         const homeTeam = (await this.getLeaderborder(homeOrTeam.teamHome));
-        // e dps fazer um objeto chamando adentrando os resultados dentro do array.
 
         const awayTeam = (await this.getLeaderborder(homeOrTeam.teamAway));
 
         const ranking = homeTeam.map((home) => {
-            const initialsValuesLeaderBoard = {
-                name: home.name,
-                totalPoints: 0,
-                totalGames: 0,
-                totalVictories: 0,
-                totalDraws: 0,
-                totalLosses: 0,
-                goalsFavor: 0,
-                goalsOwn: 0,
-                goalsBalance: 0,
-                efficiency: '0.00',
-            };
 
             awayTeam.reduce((acc, curr) => {
-                acc.totalPoints = home.totalPoints + curr.totalPoints
-                // acc.totalGames += home.totalGames
-                // acc.totalVictories += home.totalVictories
-                // acc.totalDraws += home.totalDraws,
-                // acc.totalLosses += home.totalLosses,
-                // acc.goalsFavor += home.goalsFavor,
-                // acc.goalsFavor += home.goalsFavor,
-                // acc.goalsBalance += home.goalsBalance,
-                // acc.efficiency += home.efficiency // está errado, arrumar dps de testar
-
+                // acc.name === home.name
+                if (curr.name === acc.name) {
+                acc.totalPoints += curr.totalPoints;
+                acc.totalGames += + curr.totalGames;
+                acc.totalVictories += + curr.totalVictories;
+                acc.totalDraws += curr.totalDraws;
+                acc.totalLosses += curr.totalDraws;
+                acc.goalsFavor += curr.goalsFavor;
+                acc.goalsOwn += curr.goalsOwn;
+                acc.goalsBalance = acc.goalsFavor - acc.goalsOwn;
+                const efficiency = acc.totalPoints/(acc.totalGames*3)*100;
+                acc.efficiency = efficiency.toFixed(2);
+            }
                 return acc;
-            }, initialsValuesLeaderBoard);
+            }, home);
+            return home;
         });
 
         return ranking;
