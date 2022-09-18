@@ -75,7 +75,7 @@ export default class LeaderboardService {
                 acc.totalGames += + curr.totalGames;
                 acc.totalVictories += + curr.totalVictories;
                 acc.totalDraws += curr.totalDraws;
-                acc.totalLosses += curr.totalDraws;
+                acc.totalLosses += curr.totalLosses;
                 acc.goalsFavor += curr.goalsFavor;
                 acc.goalsOwn += curr.goalsOwn;
                 acc.goalsBalance = acc.goalsFavor - acc.goalsOwn;
