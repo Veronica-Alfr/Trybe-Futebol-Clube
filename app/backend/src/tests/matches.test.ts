@@ -1,6 +1,7 @@
 import * as sinon from 'sinon';
 import * as chai from 'chai';
 import { IMatch } from '../database/interfaces/IMatch';
+import { IMatchCreate } from '../database/interfaces/IMatchBody';
 
 // @ts-ignore
 import chaiHttp = require('chai-http');
@@ -73,7 +74,7 @@ const mockMatchesWithInProgressTrue: IMatch[] = [
     }
 ];
 
-const mockMatchCreate: IMatch = {
+const mockMatchCreate: IMatchCreate = {
   "id": 1,
   "homeTeam": 16,
   "homeTeamGoals": 1,
@@ -150,7 +151,7 @@ describe('Match', () => {
             .post('/matches')
             .send();
 
-        // expect(response.body).to.be.deep.equal();
+        expect(response.body).to.be.deep.equal(mockMatchCreate);
       });
     });
   });
