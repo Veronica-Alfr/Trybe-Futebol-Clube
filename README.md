@@ -8,7 +8,14 @@
   <h3>Status do Projeto</h3>
   
     Finalizado ✅🚀
-  
+
+<details>
+    <summary><strong>Créditos</strong></summary>
+    
+    O Front-end foi feito pela equipe de devs da Trybe, para agilizar no tempo de realização do projeto pelo aluno, mas isso apenas acontece pois compreendemos a estrutura do React e a lógica realizada nesse projeto!
+
+</details>
+
 <details>
     <summary><strong>Documentação</strong></summary>
     
