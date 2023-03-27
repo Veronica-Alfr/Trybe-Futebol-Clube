@@ -1,6 +1,8 @@
 <main>
   <h1 align="center">Trybe Futebol Clube (TFC)</h1>
-
+  
+  <img width='75%' src="./front-TFC.png" alt="Front-end da aplicação do TFC que mostra o campo de busca e os dados do time."/>
+  
   <p>
   Esse é um projeto full-stack que conta com funcionalidades para filtrar partidas por classificação geral dos time da casa ou do time adversário, e filtrar partidas que estão em progresso ou finalizadas, também conta com a com a criação de partidas, alteração do placar de partidas em andamento feitas por administradores, ocorrendo assim a diferenciação de usuários e administradores, entre outras funções.
   </p>
