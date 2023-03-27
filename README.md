@@ -96,11 +96,11 @@ Na sua máquina você deve ter:
     npm run dev -> Roda a aplicação na porta escolhida por você na variavél de ambiente ou por padrão na porta 3001.
     npm run test:coverage -> Mostra a cobertura de testes por arquivo.
 
-    ⚠️ Quaisquer execução referente ao sequelize-cli deve ser realizada dentro do diretório app/backend. Certifique-se de que antes de rodar comandos do sequelize já existe uma versão compilada do back-end (diretório app/build), caso contrário basta executar `npm run build` para compilar. O sequelize só funcionará corretamente se o projeto estiver compilado.
+⚠️ Quaisquer execução referente ao sequelize-cli deve ser realizada dentro do diretório app/backend. Certifique-se de que antes de rodar comandos do sequelize já existe uma versão compilada do back-end (diretório app/build), caso contrário basta executar `npm run build` para compilar. O sequelize só funcionará corretamente se o projeto estiver compilado.
 
 #### **No Front-end**
 
-    npm start -> roda a aplicação visualmente e de forma interativa, assim é possível verificar se as funcionalidades estão realmente funcionando!
+    npm start -> roda a aplicação visual para a interação.
 
 </details>
 
