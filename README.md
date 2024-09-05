@@ -125,7 +125,7 @@ Na sua máquina você deve ter:
 
   <h3>🛠 Tecnologias</h3>
   
-  <p>As tecnologias usadas foram Node.js, TypeScript, Docker, JWT, Sequelize, MySQL, Eslint, Joi, Async Express Errors, Chai, Sinon e Postman.</p>
+  <p>As tecnologias usadas foram Node.js, TypeScript, Docker, JWT, Sequelize, MySQL, Eslint, Joi, Async Express Errors, Chai, Sinon e Postman. Além das que estão contidas no front-end: React, Context API, Hooks</p>
 
   <h3>Autor</h3>
 
