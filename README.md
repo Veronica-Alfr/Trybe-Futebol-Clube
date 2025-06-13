@@ -23,7 +23,7 @@
     
     A documentação da API está disponível no site do Postman. Para acessar a documentação, siga estes passos:
 
-  - Acesse a <a href="https://www.postman.com/veronica-alves/workspace/trybe-futebol-clube/api/3555f031-b7a9-47d9-99b7-87e89ecbd0f5/documentation/21412246-507882f8-768f-4993-9064-71d9220c294b">documentação</a>.
+  - Acesse a <a href="https://www.postman.com/veronica-alves/trybe-futebol-clube/api/3555f031-b7a9-47d9-99b7-87e89ecbd0f5/documentation/21412246-9a1effb2-15df-4964-a3b5-167436fb9e03">documentação</a>.
   - Se você não tiver uma conta no Postman, será necessário criar uma para acessá-la.
   - Depois de acessar a documentação, revise as solicitações, corpos e respostas para entender melhor como usar a API.
 
